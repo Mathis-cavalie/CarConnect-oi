@@ -252,6 +252,6 @@
         initTiltEffect();
         initActiveNavOnScroll();
         initBadgeAnimation();
-    });
+    }); 
 
 })();
