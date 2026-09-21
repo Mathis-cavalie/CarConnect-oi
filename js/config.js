@@ -5,7 +5,7 @@ window.APP_CONFIG = {
     // URL de base de l'API backend
     // Local: '/api'
     // Production: 'https://votre-app.onrender.com/api'
-    API_URL: '/api',
+    API_URL: 'https://carconnect-oi.onrender.com/api',
     
     // Mode debug
     DEBUG: false
