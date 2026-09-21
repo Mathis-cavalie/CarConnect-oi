@@ -104,7 +104,7 @@ router.get('/:id', (req, res) => {
 });
 
 // Créer un véhicule (admin only)
-router.post('/', requireAuth, upload.array('images', 10), (req, res) => {
+router.post('/', requireAuth, upload.array('images', 15), (req, res) => {
     try {
         const data = req.body;
         
@@ -157,7 +157,7 @@ router.post('/', requireAuth, upload.array('images', 10), (req, res) => {
 });
 
 // Modifier un véhicule (admin only)
-router.put('/:id', requireAuth, upload.array('images', 10), (req, res) => {
+router.put('/:id', requireAuth, upload.array('images', 15), (req, res) => {
     try {
         const { id } = req.params;
         const data = req.body;

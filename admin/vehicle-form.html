@@ -202,7 +202,7 @@
 
         .images-preview {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
             gap: 12px;
             margin-top: 20px;
         }
@@ -211,35 +211,74 @@
             border-radius: 8px;
             overflow: hidden;
             aspect-ratio: 16/10;
-            border: 1px solid var(--border-card);
+            border: 2px solid var(--border-card);
+            cursor: move;
+            transition: all 0.2s;
+        }
+        .image-preview-item:hover {
+            border-color: var(--red-primary);
+            transform: scale(1.02);
+        }
+        .image-preview-item.dragging {
+            opacity: 0.5;
+            transform: scale(0.95);
+        }
+        .image-preview-item.principale {
+            border-color: var(--red-primary);
+            box-shadow: 0 0 0 3px rgba(220,48,48,0.2);
         }
         .image-preview-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            pointer-events: none;
         }
         .image-preview-item .remove-btn {
             position: absolute;
-            top: 4px;
-            right: 4px;
-            width: 24px;
-            height: 24px;
+            top: 6px;
+            right: 6px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
-            background: rgba(220,48,48,0.9);
+            background: rgba(220,48,48,0.95);
             color: white;
             border: none;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1rem;
-        }
-        .image-preview-item.principale::after {
-            content: '⭐';
-            position: absolute;
-            bottom: 4px;
-            right: 4px;
             font-size: 1.2rem;
+            transition: all 0.2s;
+        }
+        .image-preview-item .remove-btn:hover {
+            background: var(--red-dark);
+            transform: scale(1.1);
+        }
+        .image-preview-item .primary-btn {
+            position: absolute;
+            bottom: 6px;
+            right: 6px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.95);
+            color: #666;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+        .image-preview-item .primary-btn:hover {
+            background: white;
+            color: var(--red-primary);
+            transform: scale(1.1);
+        }
+        .image-preview-item.principale .primary-btn {
+            background: var(--red-primary);
+            color: white;
         }
 
         /* Tags input */
@@ -514,9 +553,10 @@
                                 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
                             </div>
                             <div class="upload-text">Cliquez ou glissez des photos ici</div>
-                            <div class="upload-hint">JPG, PNG, WebP - Max 5MB par image (10 images max)</div>
+                            <div class="upload-hint">JPG, PNG, WebP - Max 5MB par image (15 images max)</div>
                         </div>
                         <div class="images-preview" id="imagesPreview"></div>
+                        <p style="font-size:0.85rem;color:var(--text-muted);margin-top:12px;">💡 Astuce: Glissez-déposez pour réorganiser les images. Cliquez sur ★ pour définir comme image principale.</p>
                     </div>
                 </div>
 
@@ -738,13 +778,21 @@
         });
 
         function handleFiles(files) {
-            // Pour le mode édition, on garde juste les nouvelles images en mémoire
-            // Elles seront uploadées lors de la soumission
+            const allImages = [...existingImages];
+            let newCount = 0;
+            
             for (let file of files) {
+                // Check max 15 images
+                if (allImages.length + newCount >= 15) {
+                    alert('Maximum 15 images autorisées');
+                    break;
+                }
+                
                 if (file.size > 5 * 1024 * 1024) {
                     alert(`Le fichier ${file.name} dépasse 5MB`);
                     continue;
                 }
+                
                 const reader = new FileReader();
                 reader.onload = (e) => {
                     const img = document.createElement('img');
@@ -752,31 +800,162 @@
                     
                     const item = document.createElement('div');
                     item.className = 'image-preview-item';
-                    item.innerHTML = `<button type="button" class="remove-btn">×</button>`;
-                    item.appendChild(img);
+                    item.setAttribute('draggable', 'true');
+                    item.dataset.index = allImages.length;
+                    
+                    const imgContainer = document.createElement('div');
+                    imgContainer.style.cssText = 'width:100%;height:100%;';
+                    imgContainer.appendChild(img);
+                    item.appendChild(imgContainer);
+                    
+                    // Remove button
+                    const removeBtn = document.createElement('button');
+                    removeBtn.className = 'remove-btn';
+                    removeBtn.innerHTML = '×';
+                    removeBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        removeImage(allImages.length);
+                    };
+                    item.appendChild(removeBtn);
+                    
+                    // Primary button
+                    const primaryBtn = document.createElement('button');
+                    primaryBtn.className = 'primary-btn';
+                    primaryBtn.innerHTML = '★';
+                    primaryBtn.title = 'Définir comme image principale';
+                    primaryBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        imagePrincipale = allImages[allImages.length];
+                        renderImagesPreview();
+                    };
+                    item.appendChild(primaryBtn);
+                    
+                    // Drag events
+                    item.addEventListener('dragstart', handleDragStart);
+                    item.addEventListener('dragover', handleDragOver);
+                    item.addEventListener('drop', handleDragDrop);
+                    item.addEventListener('dragend', handleDragEnd);
+                    
                     document.getElementById('imagesPreview').appendChild(item);
+                    allImages.push(e.target.result);
+                    newCount++;
                 };
                 reader.readAsDataURL(file);
             }
         }
 
+        // Drag and drop variables
+        let dragSrcEl = null;
+        let dragSrcIndex = null;
+
+        function handleDragStart(e) {
+            dragSrcEl = this;
+            dragSrcIndex = parseInt(this.dataset.index);
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', this.innerHTML);
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            this.style.transform = 'scale(1.05)';
+            return false;
+        }
+
+        function handleDragDrop(e) {
+            e.stopPropagation();
+            
+            if (dragSrcEl !== this && dragSrcIndex !== null) {
+                const targetIndex = parseInt(this.dataset.index);
+                
+                // Swap in existingImages array
+                if (existingImages[dragSrcIndex] && existingImages[targetIndex]) {
+                    const temp = existingImages[dragSrcIndex];
+                    existingImages[dragSrcIndex] = existingImages[targetIndex];
+                    existingImages[targetIndex] = temp;
+                    
+                    // Update imagePrincipale if needed
+                    if (imagePrincipale === temp) {
+                        imagePrincipale = existingImages[targetIndex];
+                    }
+                }
+                
+                renderImagesPreview();
+            }
+            
+            return false;
+        }
+
+        function handleDragEnd(e) {
+            this.classList.remove('dragging');
+            document.querySelectorAll('.image-preview-item').forEach(item => {
+                item.style.transform = '';
+            });
+        }
+
         function renderImagesPreview() {
             const container = document.getElementById('imagesPreview');
-            container.innerHTML = existingImages.map((img, idx) => `
-                <div class="image-preview-item ${img === imagePrincipale ? 'principale' : ''}">
-                    <img src="${img}" alt="Image">
-                    <button type="button" class="remove-btn" onclick="removeImage(${idx})">×</button>
-                </div>
-            `).join('');
+            container.innerHTML = '';
+            
+            existingImages.forEach((img, idx) => {
+                const item = document.createElement('div');
+                item.className = `image-preview-item ${img === imagePrincipale ? 'principale' : ''}`;
+                item.setAttribute('draggable', 'true');
+                item.dataset.index = idx;
+                
+                // Image container
+                const imgContainer = document.createElement('div');
+                imgContainer.style.cssText = 'width:100%;height:100%;';
+                const imageEl = document.createElement('img');
+                imageEl.src = img;
+                imageEl.alt = `Image ${idx + 1}`;
+                imgContainer.appendChild(imageEl);
+                item.appendChild(imgContainer);
+                
+                // Remove button
+                const removeBtn = document.createElement('button');
+                removeBtn.className = 'remove-btn';
+                removeBtn.innerHTML = '×';
+                removeBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    removeImage(idx);
+                };
+                item.appendChild(removeBtn);
+                
+                // Primary button
+                const primaryBtn = document.createElement('button');
+                primaryBtn.className = 'primary-btn';
+                primaryBtn.innerHTML = '★';
+                primaryBtn.title = 'Définir comme image principale';
+                primaryBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    imagePrincipale = img;
+                    renderImagesPreview();
+                };
+                item.appendChild(primaryBtn);
+                
+                // Drag events
+                item.addEventListener('dragstart', handleDragStart);
+                item.addEventListener('dragover', handleDragOver);
+                item.addEventListener('drop', handleDragDrop);
+                item.addEventListener('dragend', handleDragEnd);
+                
+                container.appendChild(item);
+            });
         }
 
         window.removeImage = function(idx) {
+            if (!confirm('Supprimer cette image ?')) return;
+            
             existingImages.splice(idx, 1);
+            
             if (existingImages.length === 0) {
                 imagePrincipale = '';
-            } else if (!existingImages.includes(imagePrincipale)) {
+            } else if (imagePrincipale === existingImages[idx] || !existingImages.includes(imagePrincipale)) {
                 imagePrincipale = existingImages[0];
             }
+            
             renderImagesPreview();
         };
 
