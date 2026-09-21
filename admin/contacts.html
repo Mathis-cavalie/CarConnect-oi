@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages — CarConnect OI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --red-primary: #dc3030;
+            --red-dark: #b82424;
+            --text-white: #14141a;
+            --text-body: #5d5d69;
+            --text-muted: #9a9aa5;
+            --bg-body: #f7f7f9;
+            --bg-card: #ffffff;
+            --border-card: rgba(0,0,0,0.07);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg-body); color: var(--text-white); }
+
+        .dashboard { display: flex; min-height: 100vh; }
+
+        .sidebar {
+            width: 280px;
+            background: var(--bg-card);
+            border-right: 1px solid var(--border-card);
+            padding: 24px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-card);
+            margin-bottom: 24px;
+        }
+        .sidebar-logo {
+            width: 48px; height: 48px;
+            background: linear-gradient(135deg, var(--red-primary), #ff4444);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .sidebar-logo svg { width: 28px; height: 28px; color: white; }
+        .sidebar-title { font-size: 1.1rem; font-weight: 700; }
+        .sidebar-subtitle { font-size: 0.8rem; color: var(--text-muted); }
+
+        .nav-menu { list-style: none; }
+        .nav-item { margin-bottom: 4px; }
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: var(--text-body);
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        .nav-link:hover, .nav-link.active {
+            background: rgba(220,48,48,0.08);
+            color: var(--red-primary);
+        }
+        .nav-link svg { width: 20px; height: 20px; }
+
+        .logout-btn {
+            margin-top: auto;
+            padding: 12px 16px;
+            background: rgba(220,48,48,0.1);
+            color: var(--red-primary);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            transition: all 0.2s;
+        }
+        .logout-btn:hover { background: rgba(220,48,48,0.15); }
+
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 32px 48px;
+        }
+
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+        .header-title h1 { font-size: 1.8rem; font-weight: 700; color: #14141a; }
+        .header-title p { color: var(--text-muted); margin-top: 4px; }
+
+        .btn-refresh {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 24px;
+            background: #f0f0f0;
+            color: var(--text-body);
+            border: none;
+            border-radius: 99px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-refresh:hover {
+            background: #e0e0e0;
+        }
+
+        .messages-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .message-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid var(--border-card);
+            transition: all 0.3s;
+        }
+        .message-card:hover {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+        }
+        .message-card.unread {
+            border-left: 4px solid var(--red-primary);
+        }
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+        .message-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .message-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--red-primary), #ff4444);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        .message-details h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #14141a;
+            margin-bottom: 4px;
+        }
+        .message-details p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        .message-meta {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        .message-type {
+            padding: 4px 12px;
+            background: rgba(220,48,48,0.1);
+            color: var(--red-primary);
+            border-radius: 99px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .message-date {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        .message-subject {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #14141a;
+            margin-bottom: 12px;
+        }
+        .message-body {
+            color: var(--text-body);
+            line-height: 1.7;
+            margin-bottom: 16px;
+            white-space: pre-wrap;
+        }
+        .message-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .btn-message {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 99px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-email {
+            background: var(--red-primary);
+            color: white;
+        }
+        .btn-email:hover {
+            background: var(--red-dark);
+        }
+        .btn-phone {
+            background: #f0f0f0;
+            color: var(--text-body);
+        }
+        .btn-phone:hover {
+            background: #e0e0e0;
+        }
+        .btn-mark-read {
+            background: rgba(34,197,94,0.1);
+            color: #22c55e;
+        }
+        .btn-mark-read:hover {
+            background: rgba(34,197,94,0.15);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+        }
+        .empty-state svg { width: 64px; height: 64px; margin-bottom: 16px; opacity: 0.5; }
+        .empty-state h3 { color: #14141a; margin-bottom: 8px; }
+
+        @media (max-width: 1024px) {
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; padding: 24px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H7c-.7 0-1.3.3-1.8.7C4.3 8.6 3 10 3 10s-2.7.6-4.5 1.1C-.7 11.3 0 12.1 0 13v3c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+                </div>
+                <div>
+                    <div class="sidebar-title">CarConnect OI</div>
+                    <div class="sidebar-subtitle">Administration</div>
+                </div>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="/admin/dashboard" class="nav-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/vehicles" class="nav-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H7c-.7 0-1.3.3-1.8.7C4.3 8.6 3 10 3 10s-2.7.6-4.5 1.1C-.7 11.3 0 12.1 0 13v3c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+                        Véhicules
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/motos" class="nav-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7" cy="17" r="3"/><circle cx="17" cy="17" r="3"/><path d="M5 17h2v-6h4v6h2"/><path d="M9 6h6"/><path d="M12 3v3"/></svg>
+                        Motos
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/contacts" class="nav-link active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        Messages
+                    </a>
+                </li>
+            </ul>
+
+            <button class="logout-btn" id="logoutBtn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                Déconnexion
+            </button>
+        </aside>
+
+        <!-- Main content -->
+        <main class="main-content">
+            <div class="header-bar">
+                <div class="header-title">
+                    <h1>Messages de contact</h1>
+                    <p>Gérez les demandes de vos clients</p>
+                </div>
+                <button class="btn-refresh" onclick="loadMessages()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                    Actualiser
+                </button>
+            </div>
+
+            <!-- Liste des messages -->
+            <div class="messages-list" id="messagesList">
+                <div class="empty-state">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <div>Chargement des messages...</div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Vérifier l'authentification
+        fetch('/api/auth/check', { credentials: 'include' })
+            .then(res => res.json())
+            .then(data => {
+                if (!data.loggedIn) window.location.href = '/admin';
+            });
+
+        async function loadMessages() {
+            try {
+                const res = await fetch('/api/contact');
+                const messages = await res.json();
+                renderMessages(messages);
+            } catch (error) {
+                console.error('Erreur:', error);
+                document.getElementById('messagesList').innerHTML = `
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                        <div>Erreur lors du chargement</div>
+                    </div>
+                `;
+            }
+        }
+
+        function renderMessages(messages) {
+            const list = document.getElementById('messagesList');
+            
+            if (messages.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        <h3>Aucun message</h3>
+                        <p>Les messages reçus apparaîtront ici</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Trier: non-lus en premier
+            messages.sort((a, b) => b.lu - a.lu || new Date(b.created_at) - new Date(a.created_at));
+
+            list.innerHTML = messages.map(m => {
+                const initial = m.nom.charAt(0).toUpperCase();
+                const date = new Date(m.created_at).toLocaleDateString('fr-FR', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                
+                return `
+                    <div class="message-card ${m.lu ? '' : 'unread'}">
+                        <div class="message-header">
+                            <div class="message-info">
+                                <div class="message-avatar">${initial}</div>
+                                <div class="message-details">
+                                    <h3>${m.nom}</h3>
+                                    <p>${m.email}${m.telephone ? ' • ' + m.telephone : ''}</p>
+                                </div>
+                            </div>
+                            <div class="message-meta">
+                                <span class="message-type">${m.type_demande || 'Général'}</span>
+                                <span class="message-date">${date}</span>
+                            </div>
+                        </div>
+                        ${m.sujet ? `<div class="message-subject">${m.sujet}</div>` : ''}
+                        <div class="message-body">${m.message}</div>
+                        <div class="message-actions">
+                            <a href="mailto:${m.email}" class="btn-message btn-email">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                                Répondre
+                            </a>
+                            ${m.telephone ? `
+                                <a href="tel:${m.telephone}" class="btn-message btn-phone">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                    Appeler
+                                </a>
+                            ` : ''}
+                            ${!m.lu ? `
+                                <button class="btn-message btn-mark-read" onclick="markAsRead(${m.id})">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                                    Marquer comme lu
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function markAsRead(id) {
+            try {
+                await fetch(`/api/contact/${id}/read`, {
+                    method: 'PUT',
+                    credentials: 'include'
+                });
+                loadMessages();
+            } catch (error) {
+                console.error('Erreur:', error);
+            }
+        }
+
+        // Déconnexion
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
+            window.location.href = '/admin';
+        });
+
+        // Initialisation
+        loadMessages();
+    </script>
+</body>
+</html>

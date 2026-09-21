@@ -11,23 +11,23 @@
 }
 
 :root {
-    --bg-body: #131316;
-    --bg-dark: #0e0e11;
-    --bg-surface: #1a1a1f;
-    --bg-elevated: #222228;
-    --bg-card: #1e1e24;
+    --bg-body: #ffffff;
+    --bg-dark: #f2f2f5;
+    --bg-surface: #f7f7f9;
+    --bg-elevated: #ffffff;
+    --bg-card: #ffffff;
     --red-primary: #dc3030;
     --red-dark: #b82424;
-    --red-glow: rgba(220, 48, 48, 0.35);
-    --red-subtle: rgba(220, 48, 48, 0.1);
-    --text-white: #ffffff;
-    --text-heading: #f2f2f5;
-    --text-primary: #d8d8de;
-    --text-body: #a8a8b4;
-    --text-muted: #6e6e7a;
-    --border-subtle: rgba(255, 255, 255, 0.06);
-    --border-light: rgba(255, 255, 255, 0.1);
-    --border-card: rgba(255, 255, 255, 0.08);
+    --red-glow: rgba(220, 48, 48, 0.22);
+    --red-subtle: rgba(220, 48, 48, 0.08);
+    --text-white: #14141a;
+    --text-heading: #1a1a20;
+    --text-primary: #3d3d47;
+    --text-body: #27272b;
+    --text-muted: #434349;
+    --border-subtle: rgba(0, 0, 0, 0.05);
+    --border-light: rgba(0, 0, 0, 0.09);
+    --border-card: rgba(0, 0, 0, 0.07);
     --radius-sm: 8px;
     --radius-md: 14px;
     --radius-lg: 22px;
@@ -39,6 +39,7 @@
 }
 
 html {
+    font-size: 15.5px;
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
 }
@@ -74,17 +75,17 @@ button { border: none; background: none; cursor: pointer; color: inherit; font-f
     top: 0; left: 0; right: 0;
     z-index: 1000;
     height: var(--header-h);
-    background: #ffffff;
+    background: linear-gradient(90deg, #ffffff 0%, #ffffff 65%, #e9e9ee 100%);
     border-bottom: 1px solid rgba(0,0,0,0.06);
     transition: all var(--smooth);
 }
 
 .header.scrolled {
     height: var(--header-h-shrink);
-    background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.88) 100%);
+    background: linear-gradient(90deg, rgba(255,255,255,0.97) 0%, rgba(255,255,255,0.94) 65%, rgba(233,233,238,0.9) 100%);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 2px 20px rgba(0,0,0,0.15);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.08);
     border-bottom-color: rgba(0,0,0,0.04);
 }
 
@@ -103,33 +104,18 @@ button { border: none; background: none; cursor: pointer; color: inherit; font-f
     align-items: center;
     gap: 12px;
     flex-shrink: 0;
-    transition: opacity var(--fast);
     position: relative;
 }
 
-.header__logo:hover { opacity: 0.8; }
-
 .header__logo img {
-    height: 56px;
+    height: 52px;
     width: auto;
     transition: height var(--smooth);
 }
 
 .header.scrolled .header__logo img {
-    height: 42px;
+    height: 40px;
 }
-
-.header__logo::after {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%;
-    width: 50%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(0,0,0,0.06), transparent);
-    transition: left 0.6s ease;
-    pointer-events: none;
-}
-
-.header__logo:hover::after { left: 150%; }
 
 .header__nav {
     display: flex;
@@ -309,7 +295,7 @@ button { border: none; background: none; cursor: pointer; color: inherit; font-f
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: blur(4px) brightness(0.35);
+    filter: blur(4px) brightness(1);
     transform: scale(1.08);
 }
 
@@ -318,11 +304,10 @@ button { border: none; background: none; cursor: pointer; color: inherit; font-f
     inset: 0;
     background: linear-gradient(
         180deg,
-        rgba(255,255,255,0.95) 0%,
-        rgba(255,255,255,0.6) 8%,
-        rgba(19, 19, 22, 0.5) 25%,
-        rgba(14, 14, 17, 0.75) 50%,
-        rgba(14, 14, 17, 0.95) 100%
+        rgba(255,255,255,0.96) 0%,
+        rgba(255,255,255,0.85) 30%,
+        rgba(255,255,255,0.78) 55%,
+        rgba(247,247,249,0.95) 100%
     );
 }
 
@@ -370,7 +355,6 @@ button { border: none; background: none; cursor: pointer; color: inherit; font-f
     margin-bottom: 28px;
     max-width: 900px;
     color: var(--text-white);
-    text-shadow: 0 2px 20px rgba(0,0,0,0.3);
 }
 
 .hero__title .text-gradient {
@@ -383,7 +367,7 @@ button { border: none; background: none; cursor: pointer; color: inherit; font-f
 .hero__subtitle {
     font-size: 1.2rem;
     line-height: 1.75;
-    color: rgba(255,255,255,0.8);
+    color: var(--text-body);
     margin-bottom: 44px;
     max-width: 720px;
 }
@@ -406,7 +390,7 @@ button { border: none; background: none; cursor: pointer; color: inherit; font-f
 
 .hero__scroll-indicator span {
     font-size: 0.75rem; font-weight: 500;
-    color: rgba(255,255,255,0.5);
+    color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.15em;
 }
@@ -456,14 +440,14 @@ button { border: none; background: none; cursor: pointer; color: inherit; font-f
 
 .btn--glass {
     color: var(--text-white);
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.65);
+    border: 1px solid rgba(0,0,0,0.12);
     backdrop-filter: blur(10px);
 }
 
 .btn--glass:hover {
-    background: rgba(255,255,255,0.14);
-    border-color: rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.95);
+    border-color: rgba(0,0,0,0.2);
     transform: translateY(-2px);
 }
 
@@ -526,13 +510,13 @@ button { border: none; background: none; cursor: pointer; color: inherit; font-f
 .services__bg-img {
     width: 100%; height: 100%;
     object-fit: cover;
-    filter: blur(60px) brightness(0.15) saturate(0.5);
+    filter: blur(60px) brightness(1.05) saturate(0.5);
     transform: scale(1.2);
 }
 
 .services__bg-overlay {
     position: absolute; inset: 0;
-    background: rgba(19, 19, 22, 0.88);
+    background: rgba(255, 255, 255, 0.93);
 }
 
 .services > .container { position: relative; z-index: 1; }
@@ -547,22 +531,22 @@ button { border: none; background: none; cursor: pointer; color: inherit; font-f
     position: relative;
     border-radius: var(--radius-lg);
     overflow: hidden;
-    background: rgba(30, 30, 36, 0.9);
+    background: #ffffff;
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(255,255,255,0.08);
+    border: 1px solid rgba(0,0,0,0.07);
     transition: all var(--smooth);
     cursor: default;
 }
 
 .service-card:hover {
-    border-color: rgba(220, 48, 48, 0.25);
+    border-color: rgba(220, 48, 48, 0.3);
     transform: translateY(-8px);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 30px var(--red-glow);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.1), 0 0 25px var(--red-glow);
 }
 
 .service-card__image {
     position: relative;
-    height: 240px;
+    height: 224px;
     overflow: hidden;
 }
 
@@ -576,7 +560,7 @@ button { border: none; background: none; cursor: pointer; color: inherit; font-f
 
 .service-card__image-overlay {
     position: absolute; inset: 0;
-    background: linear-gradient(to bottom, transparent 30%, rgba(30, 30, 36, 0.95) 100%);
+    background: linear-gradient(to bottom, transparent 75%, rgba(255, 255, 255, 0.35) 100%);
 }
 
 .service-card__content { padding: 32px; }
@@ -652,9 +636,9 @@ button { border: none; background: none; cursor: pointer; color: inherit; font-f
     min-width: 100%;
     padding: 44px;
     border-radius: var(--radius-lg);
-    background: rgba(34, 34, 40, 0.8);
+    background: #ffffff;
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.08);
+    border: 1px solid rgba(0,0,0,0.06);
 }
 
 .testimonial-card__stars {
@@ -682,6 +666,7 @@ button { border: none; background: none; cursor: pointer; color: inherit; font-f
     width: 52px; height: 52px;
     border-radius: 50%;
     background: var(--red-primary);
+    color: #ffffff;
     display: flex; align-items: center; justify-content: center;
     font-weight: 700; font-size: 1.1rem;
     flex-shrink: 0;
@@ -711,8 +696,8 @@ button { border: none; background: none; cursor: pointer; color: inherit; font-f
     width: 48px; height: 48px;
     display: flex; align-items: center; justify-content: center;
     border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.1);
-    background: rgba(30, 30, 36, 0.6);
+    border: 1px solid rgba(0,0,0,0.1);
+    background: #ffffff;
     color: var(--text-body);
     transition: all var(--fast);
 }
@@ -757,22 +742,22 @@ button { border: none; background: none; cursor: pointer; color: inherit; font-f
 .cta-banner__bg-img {
     width: 100%; height: 100%;
     object-fit: cover;
-    filter: blur(50px) brightness(0.2) saturate(0.4);
+    filter: blur(50px) brightness(1.05) saturate(0.4);
     transform: scale(1.3);
 }
 
 .cta-banner__bg-overlay {
     position: absolute; inset: 0;
-    background: rgba(14, 14, 17, 0.8);
+    background: rgba(255, 255, 255, 0.9);
 }
 
 .cta-banner__content {
     text-align: center;
     padding: 80px 60px;
     border-radius: var(--radius-lg);
-    background: rgba(30, 30, 36, 0.85);
+    background: rgba(255, 255, 255, 0.92);
     backdrop-filter: blur(16px);
-    border: 1px solid rgba(255,255,255,0.08);
+    border: 1px solid rgba(0,0,0,0.06);
     position: relative;
     z-index: 1;
 }
@@ -831,9 +816,9 @@ button { border: none; background: none; cursor: pointer; color: inherit; font-f
 .contact-card {
     padding: 36px 28px;
     border-radius: var(--radius-lg);
-    background: rgba(30, 30, 36, 0.8);
+    background: #ffffff;
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.07);
+    border: 1px solid rgba(0,0,0,0.06);
     text-align: left;
     transition: all var(--smooth);
 }
@@ -845,8 +830,8 @@ button { border: none; background: none; cursor: pointer; color: inherit; font-f
 
 .contact-card--link:hover {
     transform: translateY(-5px);
-    border-color: rgba(220, 48, 48, 0.25);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    border-color: rgba(220, 48, 48, 0.3);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.1);
 }
 
 .contact-card__icon {
@@ -899,10 +884,10 @@ button { border: none; background: none; cursor: pointer; color: inherit; font-f
 
 .social-link:hover { color: var(--text-white); }
 
-.social-link--facebook:hover { background: rgba(59, 89, 152, 0.2); color: #7b9bd5; }
-.social-link--instagram:hover { background: rgba(225, 48, 108, 0.15); color: #e1306c; }
-.social-link--tiktok:hover { background: rgba(255, 0, 77, 0.12); color: #ff004d; }
-.social-link--whatsapp:hover { background: rgba(37, 211, 102, 0.12); color: #25d366; }
+.social-link--facebook:hover { background: rgba(59, 89, 152, 0.1); color: #3b5998; }
+.social-link--instagram:hover { background: rgba(225, 48, 108, 0.08); color: #e1306c; }
+.social-link--tiktok:hover { background: rgba(255, 0, 77, 0.06); color: #ff004d; }
+.social-link--whatsapp:hover { background: rgba(37, 211, 102, 0.1); color: #1faa53; }
 
 /* ========================================
    FOOTER
@@ -910,14 +895,14 @@ button { border: none; background: none; cursor: pointer; color: inherit; font-f
 .footer {
     padding: 36px 0;
     background: var(--bg-dark);
-    border-top: 1px solid rgba(255,255,255,0.05);
+    border-top: 1px solid rgba(0,0,0,0.05);
 }
 
 .footer__neon-line {
     height: 1px;
     background: linear-gradient(90deg, transparent, var(--red-primary), transparent);
     opacity: 0.2;
-    margin-bottom: 36px;
+    margin-bottom: 1px;
 }
 
 .footer__inner {

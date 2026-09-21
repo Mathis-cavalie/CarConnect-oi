@@ -1,0 +1,30 @@
+# Dépendances
+node_modules/
+package-lock.json
+
+# Environnement
+.env
+.env.local
+
+# Base de données
+backend/database/*.db
+backend/database/*.sqlite
+
+# Uploads (les images générées)
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Test
+coverage/

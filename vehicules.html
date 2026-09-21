@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nos Véhicules — CarConnect OI</title>
+    <meta name="description" content="Découvrez notre sélection de voitures d'occasion de qualité à La Réunion.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚗</text></svg>">
+</head>
+<body>
+
+    <header class="header" id="header">
+        <div class="header__inner">
+            <a href="index.html" class="header__logo">
+                <img src="https://primary.jwwb.nl/public/i/f/m/temp-admztnnyumxjmkqorxeq/capture-d-e-cran-2026-08-03-a-12-36-36-high.png?enable-io=true&width=212" alt="CarConnect OI" class="header__logo-img">
+            </a>
+
+            <nav class="header__nav" id="mainNav">
+                <a href="index.html" class="nav-link">Accueil</a>
+                <a href="vehicules.html" class="nav-link active">Nos Véhicules</a>
+                <a href="vendre.html" class="nav-link">Vendre</a>
+                <a href="voiture-en-tete.html" class="nav-link">Une voiture en tête ?</a>
+                <a href="vente-pro.html" class="nav-link">Vente Pro</a>
+                <a href="pieces-auto.html" class="nav-link">Pièces Auto</a>
+                <a href="moto.html" class="nav-link">Moto</a>
+                <a href="import.html" class="nav-link">Import</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </nav>
+
+            <div class="header__actions">
+                <a href="mailto:carconnect.re@gmail.com" class="header__cta">
+                    Contactez-nous
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+                <button class="header__burger" id="burgerBtn" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav__inner">
+            <a href="index.html" class="mobile-nav__link">Accueil</a>
+            <a href="vehicules.html" class="mobile-nav__link">Nos Véhicules</a>
+            <a href="vendre.html" class="mobile-nav__link">Vendre</a>
+            <a href="voiture-en-tete.html" class="mobile-nav__link">Une voiture en tête ?</a>
+            <a href="vente-pro.html" class="mobile-nav__link">Vente Pro</a>
+            <a href="pieces-auto.html" class="mobile-nav__link">Pièces Auto</a>
+            <a href="moto.html" class="mobile-nav__link">Moto</a>
+            <a href="import.html" class="mobile-nav__link">Import</a>
+            <a href="contact.html" class="mobile-nav__link">Contact</a>
+            <a href="mailto:carconnect.re@gmail.com" class="mobile-nav__cta">Contactez-nous</a>
+        </div>
+    </div>
+
+    <section class="hero" id="vehicules">
+        <div class="hero__bg">
+            <img src="https://images.unsplash.com/photo-1550355291-bbee04a92027?w=1920&q=80" alt="" class="hero__bg-img">
+            <div class="hero__overlay"></div>
+        </div>
+        <div class="hero__content">
+            <span class="hero__badge scroll-reveal">
+                <span class="hero__badge-dot"></span>
+                Notre catalogue de véhicules
+            </span>
+            <h1 class="hero__title scroll-reveal">
+                <span class="text-gradient">Nos Véhicules</span><br>disponibles à La Réunion
+            </h1>
+            <p class="hero__subtitle scroll-reveal">
+                Explorez notre sélection de voitures d'occasion soigneusement inspectées. Chaque véhicule bénéficie d'un contrôle technique rigoureux et d'une garantie pour votre tranquillité d'esprit.
+            </p>
+            <div class="hero__actions scroll-reveal">
+                <a href="contact.html" class="btn btn--primary">
+                    Prendre rendez-vous
+                    <svg class="btn__arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+                <a href="tel:+262693870734" class="btn btn--glass">
+                    Appeler maintenant
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="services" id="catalogue">
+        <div class="services__bg">
+            <img src="https://images.unsplash.com/photo-1560179040-d91e503885d9?w=1920&q=80" alt="" class="services__bg-img">
+            <div class="services__bg-overlay"></div>
+        </div>
+        <div class="container">
+            <div class="section-header scroll-reveal">
+                <span class="section-tag">Catalogue</span>
+                <h2 class="section-title">Véhicules disponibles</h2>
+                <p class="section-subtitle">Des citadines aux SUV, en passant par les berlines, découvrez notre gamme complète de véhicules pour tous les besoins et tous les budgets.</p>
+            </div>
+
+            <div class="services__grid">
+                <div class="service-card scroll-reveal" data-tilt>
+                    <div class="service-card__image">
+                        <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=800&q=80" alt="Véhicules citadins" loading="lazy">
+                        <div class="service-card__image-overlay"></div>
+                    </div>
+                    <div class="service-card__content">
+                        <div class="service-card__icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                        </div>
+                        <h3 class="service-card__title">Citadines</h3>
+                        <p class="service-card__text">Compactes et économiques, parfaites pour la ville. Faible consommation, facile à garer, idéales pour les trajets urbains quotidiens.</p>
+                    </div>
+                </div>
+
+                <div class="service-card scroll-reveal" data-tilt>
+                    <div class="service-card__image">
+                        <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=800&q=80" alt="Berlines confortables" loading="lazy">
+                        <div class="service-card__image-overlay"></div>
+                    </div>
+                    <div class="service-card__content">
+                        <div class="service-card__icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H7c-.7 0-1.3.3-1.8.7C4.3 8.6 3 10 3 10s-2.7.6-4.5 1.1C-.7 11.3 0 12.1 0 13v3c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+                        </div>
+                        <h3 class="service-card__title">Berlines</h3>
+                        <p class="service-card__text">Confort et élégance pour vos longs trajets. Intérieur spacieux, équipements premium et performance au rendez-vous.</p>
+                    </div>
+                </div>
+
+                <div class="service-card scroll-reveal" data-tilt>
+                    <div class="service-card__image">
+                        <img src="https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=800&q=80" alt="SUV tout-terrain" loading="lazy">
+                        <div class="service-card__image-overlay"></div>
+                    </div>
+                    <div class="service-card__content">
+                        <div class="service-card__icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15l1-11h14l1 11H4z"/><path d="M4 15v4h16v-4"/><circle cx="7.5" cy="18.5" r="1.5"/><circle cx="16.5" cy="18.5" r="1.5"/></svg>
+                        </div>
+                        <h3 class="service-card__title">SUV & 4x4</h3>
+                        <p class="service-card__text">Polyvalents et robustes, pour la route et les chemins. Espace intérieur généreux et position de conduite surélevée.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CATALOGUE DYNAMIQUE -->
+    <section class="services" id="catalogue-dynamique">
+        <div class="container">
+            <div class="section-header scroll-reveal">
+                <span class="section-tag">Catalogue</span>
+                <h2 class="section-title">Nos véhicules disponibles</h2>
+                <p class="section-subtitle">Découvrez notre sélection de véhicules d'occasion soigneusement inspectés et garantis.</p>
+            </div>
+
+            <!-- Filtres -->
+            <div class="filters-bar" style="display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap;">
+                <button class="filter-btn" data-filter="all" style="padding:10px 20px;background:#fff;border:1px solid rgba(0,0,0,0.1);border-radius:99px;font-weight:500;cursor:pointer;">Tous</button>
+                <button class="filter-btn" data-filter="voiture" style="padding:10px 20px;background:#fff;border:1px solid rgba(0,0,0,0.1);border-radius:99px;font-weight:500;cursor:pointer;">Voitures</button>
+            </div>
+
+            <!-- Grille véhicules -->
+            <div id="vehiclesGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:24px;">
+                <div style="text-align:center;padding:60px 20px;color:#9a9aa5;grid-column:1/-1;">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom:16px;opacity:0.5"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H7c-.7 0-1.3.3-1.8.7C4.3 8.6 3 10 3 10s-2.7.6-4.5 1.1C-.7 11.3 0 12.1 0 13v3c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>
+                    <div>Chargement des véhicules...</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .vehicle-catalog-card {
+            background: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.07);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .vehicle-catalog-card:hover {
+            box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+            transform: translateY(-4px);
+        }
+        .vehicle-catalog-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            background: #f0f0f0;
+        }
+        .vehicle-catalog-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 6px 12px;
+            background: #dc3030;
+            color: white;
+            border-radius: 99px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .vehicle-catalog-info { padding: 20px; }
+        .vehicle-catalog-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #14141a;
+        }
+        .vehicle-catalog-meta {
+            display: flex;
+            gap: 12px;
+            color: #9a9aa5;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+        }
+        .vehicle-catalog-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #dc3030;
+        }
+        .filter-btn.active {
+            background: #dc3030 !important;
+            color: white !important;
+            border-color: #dc3030 !important;
+        }
+    </style>
+
+    <script src="/js/config.js"></script>
+    <script>
+        const API_URL = window.APP_CONFIG ? window.APP_CONFIG.API_URL : '/api';
+        
+        async function loadVehiclesCatalog() {
+            try {
+                const res = await fetch(`${API_URL}/vehicles?type=voiture&disponible=true`);
+                const vehicles = await res.json();
+                renderVehiclesCatalog(vehicles);
+            } catch (error) {
+                document.getElementById('vehiclesGrid').innerHTML = `
+                    <div style="text-align:center;padding:60px 20px;color:#9a9aa5;grid-column:1/-1;">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom:16px;opacity:0.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                        <div>Erreur lors du chargement</div>
+                    </div>
+                `;
+            }
+        }
+
+        function renderVehiclesCatalog(vehicles) {
+            const grid = document.getElementById('vehiclesGrid');
+            
+            if (vehicles.length === 0) {
+                grid.innerHTML = `
+                    <div style="text-align:center;padding:60px 20px;color:#9a9aa5;grid-column:1/-1;">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom:16px;opacity:0.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 10h20"/></svg>
+                        <div>Aucun véhicule disponible pour le moment</div>
+                        <p>Revenez bientôt ou contactez-nous</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = vehicles.map(v => `
+                <div class="vehicle-catalog-card" onclick="window.location.href='/vehicule/${v.id}'">
+                    <div style="position:relative;">
+                        <img src="${v.image_principale || 'https://via.placeholder.com/400x220?text=Pas+d%27image'}" 
+                             alt="${v.marque} ${v.modele}" 
+                             class="vehicle-catalog-img"
+                             onerror="this.src='https://via.placeholder.com/400x220?text=Erreur+image'">
+                        ${v.featured ? '<span class="vehicle-catalog-badge">⭐ Vedette</span>' : ''}
+                    </div>
+                    <div class="vehicle-catalog-info">
+                        <h3 class="vehicle-catalog-title">${v.marque} ${v.modele}</h3>
+                        <div class="vehicle-catalog-meta">
+                            <span>${v.annee}</span>
+                            <span>•</span>
+                            <span>${v.kilometrage ? v.kilometrage.toLocaleString() + ' km' : 'N/A'}</span>
+                            <span>•</span>
+                            <span>${v.carburant || 'N/A'}</span>
+                        </div>
+                        <div class="vehicle-catalog-price">${v.prix.toLocaleString()} €</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filtres
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const filter = btn.dataset.filter;
+                try {
+                    const res = await fetch(`${API_URL}/vehicles?${filter === 'all' ? '' : 'type=' + filter}&disponible=true`);
+                    const vehicles = await res.json();
+                    renderVehiclesCatalog(vehicles);
+                } catch (error) {
+                    console.error('Erreur:', error);
+                }
+            });
+        });
+
+        // Initialiser
+        loadVehiclesCatalog();
+    </script>
+
+    <section class="testimonials" id="temoignages">
+        <div class="container">
+            <div class="section-header scroll-reveal">
+                <span class="section-tag">Témoignages</span>
+                <h2 class="section-title">Avis de nos clients</h2>
+                <span class="testimonials__rating">
+                    <span class="stars">★★★★★</span> Des clients satisfaits à La Réunion
+                </span>
+            </div>
+
+            <div class="testimonials__slider" id="testimonialsSlider">
+                <div class="testimonials__track">
+                    <div class="testimonial-card scroll-reveal">
+                        <div class="testimonial-card__stars">★★★★★</div>
+                        <p class="testimonial-card__text">"J'ai trouvé ma voiture chez CarConnect OI. L'équipe a été très professionnelle et à l'écoute. Je recommande !"</p>
+                        <div class="testimonial-card__author">
+                            <div class="testimonial-card__avatar">P</div>
+                            <div>
+                                <strong>M. Philippe</strong>
+                                <span>Client satisfait</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card scroll-reveal">
+                        <div class="testimonial-card__stars">★★★★★</div>
+                        <p class="testimonial-card__text">"Service impeccable, véhicule conforme à la description et livraison rapide. Merci !"</p>
+                        <div class="testimonial-card__author">
+                            <div class="testimonial-card__avatar">N</div>
+                            <div>
+                                <strong>Mme. Nathalie</strong>
+                                <span>Cliente satisfaite</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card scroll-reveal">
+                        <div class="testimonial-card__stars">★★★★★</div>
+                        <p class="testimonial-card__text">"Excellent rapport qualité-prix. L'équipe m'a bien conseillé sur le choix de mon véhicule."</p>
+                        <div class="testimonial-card__author">
+                            <div class="testimonial-card__avatar">J</div>
+                            <div>
+                                <strong>M. Jean-Pierre</strong>
+                                <span>Client satisfait</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonials__controls">
+                    <button class="testimonial-btn testimonial-btn--prev" id="prevBtn" aria-label="Précédent">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                    </button>
+                    <div class="testimonials__dots" id="dots"></div>
+                    <button class="testimonial-btn testimonial-btn--next" id="nextBtn" aria-label="Suivant">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-banner" id="cta">
+        <div class="cta-banner__bg">
+            <img src="https://images.unsplash.com/photo-1552519507-cf0d5e72a4e8?w=1920&q=80" alt="" class="cta-banner__bg-img">
+            <div class="cta-banner__bg-overlay"></div>
+        </div>
+        <div class="container">
+            <div class="cta-banner__content scroll-reveal">
+                <h2 class="cta-banner__title">Un véhicule vous intéresse ?</h2>
+                <p class="cta-banner__text">Contactez-nous pour planifier un essai ou obtenir plus d'informations sur nos véhicules disponibles.</p>
+                <a href="contact.html" class="btn btn--primary btn--lg">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    Nous contacter
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer__neon-line"></div>
+        <div class="container footer__inner">
+            <p class="footer__copy">&copy; 2026 CarConnect OI — 97400 Saint-Denis, La Réunion. Tous droits réservés.</p>
+            <div class="footer__links">
+                <a href="#">Mentions légales</a>
+                <a href="#">Politique de confidentialité</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

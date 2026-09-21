@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détail du véhicule — CarConnect OI</title>
+    <meta name="description" content="Découvrez ce véhicule en détail chez CarConnect OI à La Réunion.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        .vehicle-detail { padding-top: 100px; }
+        
+        /* Gallery */
+        .vehicle-gallery {
+            position: relative;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 48px;
+        }
+        .gallery-main {
+            width: 100%;
+            height: 500px;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+        .gallery-main img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .gallery-thumbnails {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+        }
+        .gallery-thumbnail {
+            width: 100px;
+            height: 70px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .gallery-thumbnail:hover, .gallery-thumbnail.active {
+            border-color: var(--red-primary);
+        }
+        .gallery-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Content */
+        .vehicle-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 48px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 48px;
+        }
+
+        .vehicle-info h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #14141a;
+            margin-bottom: 8px;
+        }
+        .vehicle-meta {
+            display: flex;
+            gap: 16px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+        .vehicle-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .vehicle-price-large {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--red-primary);
+            margin-bottom: 24px;
+        }
+
+        /* Specs grid */
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+            padding: 24px;
+            background: #f7f7f9;
+            border-radius: 14px;
+        }
+        .spec-item {
+            text-align: center;
+        }
+        .spec-icon {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+        .spec-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .spec-value {
+            font-weight: 600;
+            color: #14141a;
+        }
+
+        /* Sections */
+        .detail-section {
+            margin-bottom: 32px;
+        }
+        .detail-section h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #14141a;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .detail-section p {
+            color: var(--text-body);
+            line-height: 1.75;
+        }
+
+        /* Lists */
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            background: #f7f7f9;
+            border-radius: 10px;
+        }
+        .feature-check {
+            color: var(--red-primary);
+            font-size: 1.2rem;
+        }
+        .feature-text {
+            font-size: 0.95rem;
+            color: var(--text-body);
+        }
+
+        .highlights-list {
+            list-style: none;
+        }
+        .highlights-list li {
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .highlights-list li:last-child {
+            border-bottom: none;
+        }
+        .highlight-icon {
+            color: var(--red-primary);
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        .highlight-text {
+            color: var(--text-body);
+            line-height: 1.6;
+        }
+
+        /* Sidebar */
+        .sidebar-card {
+            background: white;
+            border: 1px solid rgba(0,0,0,0.07);
+            border-radius: 16px;
+            padding: 24px;
+            position: sticky;
+            top: 132px;
+        }
+        .sidebar-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-body);
+        }
+        .contact-item svg {
+            color: var(--red-primary);
+        }
+        .btn-contact {
+            width: 100%;
+            padding: 16px;
+            background: var(--red-primary);
+            color: white;
+            border: none;
+            border-radius: 99px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+        .btn-contact:hover {
+            background: var(--red-dark);
+            box-shadow: 0 8px 24px rgba(220,48,48,0.3);
+        }
+        .btn-secondary {
+            background: #f7f7f9;
+            color: var(--text-body);
+            margin-top: 12px;
+        }
+        .btn-secondary:hover {
+            background: #eaeaef;
+        }
+
+        /* Back button */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 12px 0;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--red-primary); }
+
+        @media (max-width: 1024px) {
+            .vehicle-content { grid-template-columns: 1fr; padding: 32px 24px; }
+            .sidebar-card { position: static; }
+            .gallery-main { height: 350px; }
+        }
+        @media (max-width: 768px) {
+            .specs-grid { grid-template-columns: repeat(2, 1fr); }
+            .features-list { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header (même que les autres pages) -->
+    <header class="header" id="header">
+        <div class="header__inner">
+            <a href="/index.html" class="header__logo">
+                <img src="https://primary.jwwb.nl/public/i/f/m/temp-admztnnyumxjmkqorxeq/capture-d-e-cran-2026-08-03-a-12-36-36-high.png?enable-io=true&width=212" alt="CarConnect OI">
+            </a>
+            <nav class="header__nav" id="mainNav">
+                <a href="/index.html" class="nav-link">Accueil</a>
+                <a href="/vehicules.html" class="nav-link">Nos Véhicules</a>
+                <a href="/vendre.html" class="nav-link">Vendre</a>
+                <a href="/voiture-en-tete.html" class="nav-link">Une voiture en tête ?</a>
+                <a href="/vente-pro.html" class="nav-link">Vente Pro</a>
+                <a href="/pieces-auto.html" class="nav-link">Pièces Auto</a>
+                <a href="/moto.html" class="nav-link">Moto</a>
+                <a href="/import.html" class="nav-link">Import</a>
+                <a href="/contact.html" class="nav-link">Contact</a>
+            </nav>
+            <div class="header__actions">
+                <a href="mailto:carconnect.re@gmail.com" class="header__cta">Contactez-nous</a>
+                <button class="header__burger" id="burgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav__inner">
+            <a href="/index.html" class="mobile-nav__link">Accueil</a>
+            <a href="/vehicules.html" class="mobile-nav__link">Nos Véhicules</a>
+            <a href="/vendre.html" class="mobile-nav__link">Vendre</a>
+            <a href="/voiture-en-tete.html" class="mobile-nav__link">Une voiture en tête ?</a>
+            <a href="/vente-pro.html" class="mobile-nav__link">Vente Pro</a>
+            <a href="/pieces-auto.html" class="mobile-nav__link">Pièces Auto</a>
+            <a href="/moto.html" class="mobile-nav__link">Moto</a>
+            <a href="/import.html" class="mobile-nav__link">Import</a>
+            <a href="/contact.html" class="mobile-nav__link">Contact</a>
+            <a href="mailto:carconnect.re@gmail.com" class="mobile-nav__link">Contactez-nous</a>
+        </div>
+    </div>
+
+    <main class="vehicle-detail">
+        <!-- Gallery -->
+        <div class="vehicle-gallery">
+            <a href="#" class="back-link" onclick="history.back()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                Retour
+            </a>
+            <div class="gallery-main">
+                <img id="mainImage" src="" alt="">
+            </div>
+            <div class="gallery-thumbnails" id="thumbnails"></div>
+        </div>
+
+        <!-- Content -->
+        <div class="vehicle-content">
+            <div class="vehicle-info">
+                <h1 id="vehicleTitle">Chargement...</h1>
+                <div class="vehicle-meta" id="vehicleMeta"></div>
+                <div class="vehicle-price-large" id="vehiclePrice"></div>
+
+                <!-- Specs grid -->
+                <div class="specs-grid" id="specsGrid"></div>
+
+                <!-- Description -->
+                <div class="detail-section">
+                    <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;vertical-align:middle;margin-right:8px"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Description</h3>
+                    <p id="vehicleDescription"></p>
+                </div>
+
+                <!-- Motorisation -->
+                <div class="detail-section">
+                    <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;vertical-align:middle;margin-right:8px"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"/></svg> Motorisation</h3>
+                    <div id="motorisation" class="features-list"></div>
+                </div>
+
+                <!-- Équipements -->
+                <div class="detail-section">
+                    <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;vertical-align:middle;margin-right:8px"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/></svg> Équipements</h3>
+                    <div id="equipements" class="features-list"></div>
+                </div>
+
+                <!-- Entretien -->
+                <div class="detail-section">
+                    <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;vertical-align:middle;margin-right:8px"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/></svg> Entretien</h3>
+                    <p id="entretien"></p>
+                </div>
+
+                <!-- Pneumatiques -->
+                <div class="detail-section">
+                    <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;vertical-align:middle;margin-right:8px"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg> Pneumatiques</h3>
+                    <p id="pneumatiques"></p>
+                </div>
+
+                <!-- Points forts -->
+                <div class="detail-section">
+                    <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;vertical-align:middle;margin-right:8px"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Les points forts</h3>
+                    <ul class="highlights-list" id="pointsForts"></ul>
+                </div>
+            </div>
+
+            <!-- Sidebar contact -->
+            <aside class="sidebar-card">
+                <h3>Intéressé par ce véhicule ?</h3>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        <span id="contactPhone">+262 693 87 07 34</span>
+                    </div>
+                    <div class="contact-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        <span>carconnect.re@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        <span>97400 Saint-Denis, La Réunion</span>
+                    </div>
+                </div>
+                <button class="btn-contact" onclick="window.location.href='tel:+262693870734'">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;vertical-align:middle;margin-right:8px"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    Appeler maintenant
+                </button>
+                <button class="btn-contact btn-secondary" onclick="window.location.href='mailto:carconnect.re@gmail.com'">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;vertical-align:middle;margin-right:8px"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    Envoyer un email
+                </button>
+                <button class="btn-contact btn-secondary" onclick="window.open('https://wa.me/262693870734', '_blank')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;vertical-align:middle;margin-right:8px"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><circle cx="8.5" cy="8.5" r="1"/><circle cx="15.5" cy="15.5" r="1"/><path d="M7 16l-2 4 4-2"/></svg>
+                    WhatsApp
+                </button>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer__neon-line"></div>
+        <div class="container footer__inner">
+            <p class="footer__copy">&copy; 2026 CarConnect OI — 97400 Saint-Denis, La Réunion. Tous droits réservés.</p>
+            <div class="footer__links">
+                <a href="#">Mentions légales</a>
+                <a href="#">Politique de confidentialité</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/config.js"></script>
+    <script src="/js/config.js"></script>
+    <script src="/js/main.js"></script>
+    <script>
+        const API_URL = window.APP_CONFIG ? window.APP_CONFIG.API_URL : '/api';
+        const vehicleId = window.location.pathname.split('/').pop();
+
+        async function loadVehicle() {
+            try {
+                const res = await fetch(`${API_URL}/vehicles/${vehicleId}`);
+                if (!res.ok) throw new Error('Véhicule non trouvé');
+                const v = await res.json();
+                renderVehicle(v);
+            } catch (error) {
+                document.getElementById('vehicleTitle').textContent = 'Véhicule non trouvé';
+                document.getElementById('vehicleMeta').innerHTML = '';
+                console.error(error);
+            }
+        }
+
+        function renderVehicle(v) {
+            // Titre
+            document.getElementById('vehicleTitle').textContent = `${v.marque} ${v.modele}`;
+            document.title = `${v.marque} ${v.modele} — CarConnect OI`;
+
+            // Meta
+            const meta = [];
+            if (v.annee) meta.push(`${v.annee}`);
+            if (v.kilometrage) meta.push(`${v.kilometrage.toLocaleString()} km`);
+            if (v.carburant) meta.push(v.carburant);
+            if (v.boite_vitesses) meta.push(v.boite_vitesses);
+            document.getElementById('vehicleMeta').innerHTML = meta.map(m => `<span>• ${m}</span>`).join('');
+
+            // Prix
+            document.getElementById('vehiclePrice').textContent = `${v.prix.toLocaleString()} €`;
+
+            // Specs grid
+            const specs = [
+                { icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>', label: 'Année', value: v.annee },
+                { icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 15h18"/><path d="M6 9a3 3 0 1 1 6 0"/><path d="M15 9a3 3 0 1 1 6 0"/></svg>', label: 'Carburant', value: v.carburant },
+                { icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"/></svg>', label: 'Boîte', value: v.boite_vitesses },
+                { icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>', label: 'Portes', value: v.nombre_portes },
+                { icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>', label: 'Places', value: v.nombre_places },
+                { icon: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.74 5.88-5.74 5.88-5.74-5.88z"/><path d="M22 12l-5.74 5.88L12 12l-4.26 5.88L2 12"/></svg>', label: 'Couleur', value: v.couleur },
+            ].filter(s => s.value);
+            document.getElementById('specsGrid').innerHTML = specs.map(s => `
+                <div class="spec-item">
+                    <div class="spec-icon">${s.icon}</div>
+                    <div class="spec-label">${s.label}</div>
+                    <div class="spec-value">${s.value}</div>
+                </div>
+            `).join('');
+
+            // Description
+            document.getElementById('vehicleDescription').textContent = v.description || 'Aucune description disponible.';
+
+            // Motorisation
+            const motorisation = [];
+            if (v.moteur) motorisation.push({ label: 'Moteur', value: v.moteur });
+            if (v.cylindree) motorisation.push({ label: 'Cylindrée', value: v.cylindree });
+            if (v.puissance) motorisation.push({ label: 'Puissance', value: v.puissance });
+            if (v.transmission) motorisation.push({ label: 'Transmission', value: v.transmission });
+            document.getElementById('motorisation').innerHTML = motorisation.map(m => `
+                <div class="feature-item">
+                    <span class="feature-check"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
+                    <div>
+                        <strong>${m.label}:</strong> ${m.value}
+                    </div>
+                </div>
+            `).join('');
+
+            // Équipements
+            const equipements = v.equipements || [];
+            if (equipements.length > 0) {
+                document.getElementById('equipements').innerHTML = equipements.map(e => `
+                    <div class="feature-item">
+                        <span class="feature-check"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
+                        <span class="feature-text">${e}</span>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('equipements').innerHTML = '<p style="color:var(--text-muted);grid-column:1/-1;">Aucun équipement listé</p>';
+            }
+
+            // Entretien
+            document.getElementById('entretien').textContent = v.entretien || 'Aucune information.';
+
+            // Pneumatiques
+            document.getElementById('pneumatiques').textContent = v.pneumatiques || 'Aucune information.';
+
+            // Points forts
+            const pointsForts = v.points_forts || [];
+            if (pointsForts.length > 0) {
+                document.getElementById('pointsForts').innerHTML = pointsForts.map(p => `
+                    <li>
+                        <span class="highlight-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
+                        <span class="highlight-text">${p}</span>
+                    </li>
+                `).join('');
+            } else {
+                document.getElementById('pointsForts').innerHTML = '<li><span class="highlight-text">Aucun point fort listé</span></li>';
+            }
+
+            // Images
+            const images = v.images || [];
+            if (images.length > 0) {
+                document.getElementById('mainImage').src = v.image_principale || images[0];
+                document.getElementById('thumbnails').innerHTML = images.map((img, idx) => `
+                    <div class="gallery-thumbnail ${idx === 0 ? 'active' : ''}" onclick="changeImage('${img}', this)">
+                        <img src="${img}" alt="">
+                    </div>
+                `).join('');
+            }
+        }
+
+        window.changeImage = function(src, thumb) {
+            document.getElementById('mainImage').src = src;
+            document.querySelectorAll('.gallery-thumbnail').forEach(t => t.classList.remove('active'));
+            thumb.classList.add('active');
+        };
+
+        loadVehicle();
+    </script>
+</body>
+</html>
